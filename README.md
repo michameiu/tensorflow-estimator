@@ -4,6 +4,10 @@ Using Tensorflow's tf.estimator
 
 Getting Started
 --------------
+Make a directory to save the model in the same folder
+
+    mkdir school_model
+
     pip install -r requirements.txt
 
 Training

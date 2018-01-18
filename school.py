@@ -24,7 +24,7 @@ def main(trainings=1):
     # Specify that all features have real-value data
     feature_columns = [tf.feature_column.numeric_column("x", shape=[3])]
 
-    # Build 3 layer DNN with 10, 20, 10 units respectively.
+    # Build 3 layer DNN with 1024,512,256 units respectively.
     classifier = tf.estimator.DNNRegressor(feature_columns=feature_columns,
                                             hidden_units=[1024, 512, 256],
 

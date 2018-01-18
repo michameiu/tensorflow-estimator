@@ -7,6 +7,10 @@ import os
 import numpy as np
 import tensorflow as tf
 import sys
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+
 TRAINING_DATA="school_data.csv"
 TEST_DATA="school_test_data.csv"
 

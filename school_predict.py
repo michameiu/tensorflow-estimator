@@ -6,7 +6,8 @@ import os
 import sys
 import numpy as np
 import tensorflow as tf
-
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 def main(predict_params):
     feature_columns = [tf.feature_column.numeric_column("x", shape=[3])]
@@ -39,12 +40,12 @@ def main(predict_params):
 
 if __name__ == "__main__":
     parameters=sys.argv
-    print(parameters)
+    # print(parameters)
     if len(parameters) < 4:
         print("Error some fields missing.")
     else:
         prs=[float(d) for d in parameters[1:]]
         # print(prs)
         prediction=main(prs)
-        print(prediction)
+        print( prs, " => " , prediction)
 

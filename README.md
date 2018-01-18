@@ -12,7 +12,7 @@ Make a *school_model* directory to save the model
 
 Training
 --------------
-Run *school.py epochs* with the number of epochs required.
+Run *school.py* with the number of epochs required.
 
     python school.py 10
 

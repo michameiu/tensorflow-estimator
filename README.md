@@ -21,6 +21,6 @@ Predicting
 
 Run *school_predict.py* with price, growth rate and quarter as parameters
 
-    python school_predict.py 26 33. 3
+    python school_predict.py 26 3.3 3
 
 

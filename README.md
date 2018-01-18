@@ -8,13 +8,13 @@ Getting Started
 
 Training
 --------------
-Just run **school.py epochs** with the number of epochs required.
+Run **school.py epochs** with the number of epochs required.\n
     python school.py 10
 
 Predicting
 --------------
 
-Run **school_predict.py price growth_rate quarter**
+Run **school_predict.py price growth_rate quarter**\n
     python school_predict.py 26 33. 3
 
 

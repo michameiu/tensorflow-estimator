@@ -15,7 +15,7 @@ Run *school.py epochs* with the number of epochs required.
 Predicting
 --------------
 
-Run *school_predict.py price growth_rate quarter*
+Run *school_predict.py * and pass price, growth rate and quarter as parameters
 
     python school_predict.py 26 33. 3
 

@@ -4,7 +4,7 @@ Using Tensorflow's tf.estimator
 
 Getting Started
 --------------
-Make a directory to save the model in the same folder
+Make a *school_model* directory to save the model
 
     mkdir school_model
 

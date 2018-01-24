@@ -1,3 +1,5 @@
+#!/usr/python
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -7,14 +9,14 @@ import os
 import numpy as np
 import tensorflow as tf
 import sys
-
+from sys import stdout
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 TRAINING_DATA="school_data.csv"
 TEST_DATA="school_test_data.csv"
 
-def main(trainings=1):
+def main(trainings=10):
     training_set=tf.contrib.learn.datasets.base.load_csv_with_header(
       filename=TRAINING_DATA,
       target_dtype=np.int64,
@@ -55,10 +57,15 @@ def main(trainings=1):
 
     for i in range(trainings):
         # Train model.
-        classifier.train(input_fn=train_input_fn, steps=100)
+        perc=(float(i+1)/float(trainings))*100
+        classifier.train(input_fn=train_input_fn, steps=1)
         accuracy_score = classifier.evaluate(input_fn=test_input_fn)
-        print (accuracy_score)
-
+        # print (accuracy_score)
+        ac=accuracy_score
+        stdout.write("\r Training:%.0f%s   Avg Loss: %s   TotalSteps: %s    Loss: %s"
+                     %(perc,"%",ac["average_loss"],ac["global_step"],ac["loss"]))
+        stdout.flush()
+    print ()
 
 
 
@@ -71,12 +78,11 @@ def main(trainings=1):
     # print("\nTest Accuracy: \n".format(accuracy_score))
     # print("ACcouracy ",accuracy_score)
     # Classify two new flower samples.
-    new_samples = np.array(
-        [
-            [25,3.8,1],
+    samples=[[25,3.8,1],
             [26, 6.2, 2],
-         [22,4.1,3]
-         ], dtype=np.float32)
+         [22,4.1,3]]
+    new_samples = np.array(
+        samples, dtype=np.float32)
     predict_input_fn = tf.estimator.inputs.numpy_input_fn(
         x={"x": new_samples},
         num_epochs=1,
@@ -84,11 +90,11 @@ def main(trainings=1):
 
     predictions = list(classifier.predict(input_fn=predict_input_fn))
     # print (predictions)
-    predicted_classes = [p["predictions"] for p in predictions]
+    predicted_classes = [p["predictions"][0] for p in predictions]
 
     print(
-        "New Samples, Class Predictions:    {}\n"
-            .format(predicted_classes))
+        "Predictions: {} == > {}\n"
+            .format( samples, predicted_classes))
 
 
 if __name__ == "__main__":

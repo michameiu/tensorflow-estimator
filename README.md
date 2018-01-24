@@ -6,9 +6,8 @@ Getting Started
 --------------
 Make a *school_model* directory to save the model
 
-    mkdir school_model
 
-    pip install -r requirements.txt
+    pip install -r requirements.txt --no-cache-dir
 
 Training
 --------------

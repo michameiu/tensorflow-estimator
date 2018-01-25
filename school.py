@@ -15,8 +15,11 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 TRAINING_DATA="school_data.csv"
 TEST_DATA="school_test_data.csv"
+MODEL_DIR="school_model"
+EXPORT_MODEL_DIR="school_model/export"
 
-def main(trainings=10):
+def main(trainings=10,export=False):
+
     training_set=tf.contrib.learn.datasets.base.load_csv_with_header(
       filename=TRAINING_DATA,
       target_dtype=np.int64,
@@ -34,7 +37,7 @@ def main(trainings=10):
     classifier = tf.estimator.DNNRegressor(feature_columns=feature_columns,
                                             hidden_units=[1024, 512, 256],
 
-                                            model_dir="school_model",
+                                            model_dir=MODEL_DIR,
                                             optimizer = tf.train.ProximalAdagradOptimizer(
                                                 learning_rate=0.1,
                                                 l1_regularization_strength=0.001
@@ -58,7 +61,8 @@ def main(trainings=10):
     for i in range(trainings):
         # Train model.
         perc=(float(i+1)/float(trainings))*100
-        classifier.train(input_fn=train_input_fn, steps=1)
+        classifier.train(input_fn=train_input_fn, steps=100)
+        # if (i+5)%5 == 0:
         accuracy_score = classifier.evaluate(input_fn=test_input_fn)
         # print (accuracy_score)
         ac=accuracy_score
@@ -97,10 +101,34 @@ def main(trainings=10):
             .format( samples, predicted_classes))
 
 
+    ###Exporting the model
+
+    def save_model():
+        print ("Saving Model .....")
+        serv_feature_spec =  {"x":tf.FixedLenFeature(shape=[3],dtype=np.float32)} #[tf.FixedLenFeature("x", shape=[3]) ]# .numeric_column(]
+        serving_fn=tf.estimator.export.build_parsing_serving_input_receiver_fn(serv_feature_spec)
+        classifier.export_savedmodel(export_dir_base=EXPORT_MODEL_DIR,
+                                     serving_input_receiver_fn=serving_fn
+                                     )
+    if export:
+        save_model()
+
+
 if __name__ == "__main__":
     params=sys.argv
-    trainings=int(params[1]) if len(params) >1 else 1
-    main(trainings)
+    # print(parameters)
+    # print( params[1] , len(params), params[1])
+    if len(params) < 2:
+        raise AssertionError("Argument not provide")
+
+    if params[1].isdigit() :
+        trainings=int(params[1]) if len(params) >1 else 1
+        main(trainings,export=False)
+    elif type(params[1]) == str and params[1] == "export":
+        main(1,export=True)
+    else:
+        print ("error")
+
 
 
 

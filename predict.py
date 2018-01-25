@@ -14,7 +14,7 @@ def main(predict_params):
     classifier = tf.estimator.DNNRegressor(feature_columns=feature_columns,
                                            hidden_units=[1024, 512, 256],
 
-                                           model_dir="school_model",
+                                           model_dir="trained_model",
                                            optimizer=tf.train.ProximalAdagradOptimizer(
                                                learning_rate=0.1,
                                                l1_regularization_strength=0.001

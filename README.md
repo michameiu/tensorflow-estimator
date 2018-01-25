@@ -13,13 +13,13 @@ Training
 --------------
 Run *school.py* with the number of epochs required.
 
-    python school.py 10
+    python training.py 10
 
 Predicting
 --------------
 
 Run *school_predict.py* with price, growth rate and quarter as parameters
 
-    python school_predict.py 26 3.3 3
+    python predict.py 26 3.3 3
 
 

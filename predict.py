@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -13,7 +14,6 @@ def main(predict_params):
     feature_columns = [tf.feature_column.numeric_column("x", shape=[3])]
     classifier = tf.estimator.DNNRegressor(feature_columns=feature_columns,
                                            hidden_units=[1024, 512, 256],
-
                                            model_dir="trained_model",
                                            optimizer=tf.train.ProximalAdagradOptimizer(
                                                learning_rate=0.1,

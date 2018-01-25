@@ -1,4 +1,4 @@
-#!/usr/python
+#!/usr/bin/python
 
 from __future__ import absolute_import
 from __future__ import division
@@ -15,8 +15,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 TRAINING_DATA="school_data.csv"
 TEST_DATA="school_test_data.csv"
-MODEL_DIR="trained_model"
-EXPORT_MODEL_DIR="trained_model/export"
+MODEL_DIR="trained_model_09"
+EXPORT_MODEL_DIR="%s/export"%(MODEL_DIR)
 
 def main(trainings=10,export=False):
 
@@ -35,10 +35,10 @@ def main(trainings=10,export=False):
 
     # Build 3 layer DNN with 1024,512,256 units respectively.
     classifier = tf.estimator.DNNRegressor(feature_columns=feature_columns,
-                                            hidden_units=[180, 90, 45],
-                                            activation_fn=tf.nn.relu,
+                                            hidden_units=[1024, 512, 256],
+                                            # activation_fn=tf.nn.relu,
                                             model_dir=MODEL_DIR,
-                                           # dropout=0.8,
+                                           dropout=0.9,
                                             optimizer = tf.train.ProximalAdagradOptimizer(
                                                 learning_rate=0.1,
                                                 l1_regularization_strength=0.001
@@ -63,7 +63,7 @@ def main(trainings=10,export=False):
     for i in range(trainings):
         # Train model.
         perc=(float(i+1)/float(trainings))*100
-        classifier.train(input_fn=train_input_fn, steps=100)
+        classifier.train(input_fn=train_input_fn, steps=5000)
         # if (i+5)%5 == 0:
         accuracy_score = classifier.evaluate(input_fn=test_input_fn)
         # print (accuracy_score)
